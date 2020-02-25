@@ -1,0 +1,10 @@
+const { transactions, balance } = this.state;
+
+    const deposit = [...transactions].reduce((acc, item) => {
+      if (item.type === 'deposit') {
+        return acc + item.amount;
+      } else if (item.type === 'withdrawal') {
+        return acc + item.amount;
+      }
+      return acc;
+    }, 0);
