@@ -1142,9 +1142,9 @@ public class StreamSample {
 
         Stream<String> stream = Files.lines(Paths.get("src/main/resources/text.txt"));
 
-        Assert.assertEquals("[This is training]", stream.collect(() -> new ArrayList<String>()
-                , (strings, s) -> strings.add(s)
-                , (strings, strings2) -> strings.addAll(strings2)).toString());
+        Assert.assertEquals("[This is training]", stream.collect(() -> new ArrayList<String>(),
+                (strings, s) -> strings.add(s),
+                (strings, strings2) -> strings.addAll(strings2)).toString());
 
     }
 
@@ -1159,4 +1159,20 @@ public class StreamSample {
         Assert.assertEquals("[72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]", Arrays.toString(stream.toArray()));
 
     }
+
+
+    // робота с примитивными стримами и вараргами
+    @Test
+    public void run() {
+        Assert.assertEquals("987654321", stringRange(2, 4, 7, 5, 3, 1, 6, 9, 8));
+    }
+
+    private String stringRange(int... range) {
+
+        // Another variant
+        String collect = IntStream.of(range).mapToObj(String::valueOf).sorted(Comparator.reverseOrder()).collect(Collectors.joining());
+
+        return Arrays.stream(range).boxed().sorted(Collections.reverseOrder()).map(Object::toString).collect(Collectors.joining());
+    }
+
 }
