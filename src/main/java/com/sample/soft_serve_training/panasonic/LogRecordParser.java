@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LogRecordParser {
@@ -100,15 +101,13 @@ public class LogRecordParser {
 
         List<Node> rootNodesList = parser.getNodes(inputData);
 
-        List<ResultNode> resultNodes = new LinkedList<>();
+        List<Map<String, Object>> resultNodes = new LinkedList<>();
+//        List<ResultNode> resultNodes = new LinkedList<>();
 
         for (Node rootNode : rootNodesList) {
             resultNodes.add(parser.prepareJsonView(rootNode));
         }
 
-
-//        String s = resultNodes.toString();
-//        System.out.println(s);
 
         return gson.toJson(resultNodes);
     }
@@ -250,21 +249,49 @@ public class LogRecordParser {
         return stringStringLinkedHashMap;
     }
 
-    private ResultNode prepareJsonView(Node mainNode) {
-        ResultNode resultNode = new ResultNode(mainNode.getNodeName(), mainNode.getValues());
+    private LinkedHashMap<String, Object> prepareJsonView(Node mainNode) {
+
+        LinkedHashMap<String, Object> resultMap = new LinkedHashMap<>();
+        resultMap.put("Name", mainNode.getNodeName());
+        mainNode.getValues().forEach(resultMap::put);
+
+        LinkedList<LinkedHashMap<String, Object>> subRecordsList = new LinkedList<>();
 
         if (!mainNode.getChildList().isEmpty()) {
             for (Node node : mainNode.getChildList()) {
-                ResultNode innerNode = new ResultNode(node.getNodeName(), node.getValues());
+
+                LinkedHashMap<String, Object> tmpMap = new LinkedHashMap<>();
+                tmpMap.put("Name", node.getNodeName());
+                node.getValues().forEach(tmpMap::put);
 
                 if (!node.getChildList().isEmpty()) {
-                    resultNode.addSubRecordToList(prepareJsonView(node));
+                    subRecordsList.add(prepareJsonView(node));
+                    resultMap.put("subRecords", subRecordsList);
                 } else {
-                    resultNode.addSubRecordToList(innerNode);
+                    subRecordsList.add(tmpMap);
+                    resultMap.put("subRecords", subRecordsList);
                 }
             }
         }
 
-        return resultNode;
+        return resultMap;
     }
+
+//    private ResultNode prepareJsonView(Node mainNode) {
+//        ResultNode resultNode = new ResultNode(mainNode.getNodeName(), mainNode.getValues());
+//
+//        if (!mainNode.getChildList().isEmpty()) {
+//            for (Node node : mainNode.getChildList()) {
+//                ResultNode innerNode = new ResultNode(node.getNodeName(), node.getValues());
+//
+//                if (!node.getChildList().isEmpty()) {
+//                    resultNode.addSubRecordToList(prepareJsonView(node));
+//                } else {
+//                    resultNode.addSubRecordToList(innerNode);
+//                }
+//            }
+//        }
+//
+//        return resultNode;
+//    }
 }
