@@ -87,7 +87,7 @@ public class LogRecordParser {
                 "{@BLOCK|1%r28|01\n" +
                 "{@A-JUM|1|-4.666946E+04}\n" +
                 "{@A-RES|1|1.246700E+01\n" +
-                "{@A-INNER|1|-4.666946E+04}\n" +
+                "{@A-COOKED-UP|1|-4.666946E+04}\n" +
                 "}\n" +
                 "}\n" +
                 "}}";
