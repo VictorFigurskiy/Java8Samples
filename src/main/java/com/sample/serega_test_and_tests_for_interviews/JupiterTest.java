@@ -6,8 +6,7 @@ import java.util.stream.Stream;
 
 public class JupiterTest {
 
-    //Нужно найти все Pair, second которых делится на 3 и сргупировать их по first что бы получилось Map<String, List<Pair<String, Integer>>>
-    //generatedData
+    //Нужно найти все Pair, second которых делится на 3 и сргупировать их по first что бы получилось Map<String, List<Pair<String, Integer>>> generatedData
     //На выходе нужно Map<String, List<Pair<String, Integer>>>
     //типа фильтрануть все Pair, second которых делится на 3
     //а потом сргупировать по first в мапу
