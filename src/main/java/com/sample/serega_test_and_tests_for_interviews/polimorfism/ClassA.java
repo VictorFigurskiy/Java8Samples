@@ -6,6 +6,6 @@ package com.sample.serega_test_and_tests_for_interviews.polimorfism;
 public class ClassA {
     public int publicValue;
     public void showV(){
-        System.out.println("this is classA, value="+this.publicValue);
+        System.out.println("this is classA, value=" + this.publicValue);
     }
 }

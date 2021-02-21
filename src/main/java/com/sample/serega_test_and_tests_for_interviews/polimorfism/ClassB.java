@@ -6,6 +6,6 @@ package com.sample.serega_test_and_tests_for_interviews.polimorfism;
 public class ClassB extends ClassA{
     public int publicValue;
     void setSuperV(int v){
-        super.publicValue=v;
+        super.publicValue = v;
     }
 }
